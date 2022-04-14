@@ -3,12 +3,16 @@ public class Model {
     private final Account[] accounts;
     private Account currentAccount;
     private int currency;
+    private boolean slotWorking;
+    private boolean chuteWorking;
 
     public Model() {
         this.currentScreen = 1;
         this.accounts = Account.generateAccounts();
         this.currentAccount = null;
         this.currency = 1000;
+        this.slotWorking = true;
+        this.chuteWorking = true;
     }
 
     public int getCurrentScreen() {
@@ -68,12 +72,12 @@ public class Model {
         //screen is terminal until clear is added
     }
 
-    public void screen5(int choice, boolean workingSlot, boolean workingChute){
+    public void screen5(int choice){
         if(choice == 1){
             this.setCurrentScreen(6);
         }
         else if(choice == 2){
-            if(workingSlot){
+            if(this.slotWorking){
                 this.setCurrentScreen(7);
             }
             else{
@@ -81,7 +85,7 @@ public class Model {
             }
         }
         else if(choice == 3){
-            if(workingChute){
+            if(this.chuteWorking){
                 this.setCurrentScreen(7);
             }
             else{
@@ -158,6 +162,14 @@ public class Model {
 
     public void screen15(){
         //screen is terminal until clear is added
+    }
+
+    public void changeSlotStatus(){ //break or repair the imaginary deposit slot
+        this.slotWorking = !this.slotWorking;
+    }
+
+    public void changeChuteStatus(){ //break or repair the imaginary withdrawal slot
+        this.chuteWorking = !this.chuteWorking;
     }
 
 }
