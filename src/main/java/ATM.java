@@ -1,22 +1,28 @@
-public class Model {
+public class ATM {
     private int currentScreen;
     private final Account[] accounts;
     private Account currentAccount;
     private int currency;
     private boolean slotWorking;
     private boolean chuteWorking;
+    private boolean running;
 
-    public Model() {
+    public ATM() {
         this.currentScreen = 1;
         this.accounts = Account.generateAccounts();
         this.currentAccount = null;
         this.currency = 1000;
         this.slotWorking = true;
         this.chuteWorking = true;
+        this.running = true;
     }
 
     public int getCurrentScreen() {
         return currentScreen;
+    }
+
+    public boolean isRunning() {
+        return running;
     }
 
     public void setCurrentScreen(int screen){
@@ -72,28 +78,33 @@ public class Model {
         //screen is terminal until clear is added
     }
 
-    public void screen5(int choice){
+    public int screen5(int choice){
         if(choice == 1){
             this.setCurrentScreen(6);
+            return 0;
         }
         else if(choice == 2){
             if(this.slotWorking){
                 this.setCurrentScreen(7);
+                return 1;
             }
             else{
                 this.setCurrentScreen(12);
+                return 0;
             }
         }
         else if(choice == 3){
             if(this.chuteWorking){
                 this.setCurrentScreen(7);
+                return 0;
             }
             else{
                 this.setCurrentScreen(10);
+                return 0;
             }
 
         }
-
+        return 0;
     }
 
     public double screen6(){
@@ -170,6 +181,10 @@ public class Model {
 
     public void changeChuteStatus(){ //break or repair the imaginary withdrawal slot
         this.chuteWorking = !this.chuteWorking;
+    }
+
+    public void stopRunning(){
+        this.running = false;
     }
 
 }

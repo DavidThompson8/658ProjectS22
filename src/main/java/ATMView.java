@@ -1,17 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class View{
+public class ATMView {
 
-    public View() {
+    public ATMView() {
     }
 
-    public void initialScreen(Graphics graphics, JFrame frame, Canvas canvas, Image UI){
+    public void initialScreen(){
         //will draw initial screen, including UI
-        canvas.setSize(6000, 1000);
-        frame.add(canvas);
-        frame.pack();
-        frame.setVisible(true);
+        System.out.println("Initial UI would appear now");
 
     }
 
