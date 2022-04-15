@@ -33,7 +33,7 @@ public class ATM {
         this.currentAccount = currentAccount;
     }
 
-    public void screen1(int pan){
+    public void screen1(int pan){ //Starting screen, asks for PAN
         boolean valid = false;
         int location = -1;
         for(int i = 0; i < accounts.length; i++){
@@ -52,7 +52,7 @@ public class ATM {
         }
     }
 
-    public void screen2(int pin){
+    public void screen2(int pin){ //Asks for PIN
         if(pin == this.currentAccount.getPin()){
             this.setCurrentScreen(5);
         }
@@ -61,7 +61,7 @@ public class ATM {
         }
     }
 
-    public void screen3(int pin){
+    public void screen3(int pin){ //Asks for PIN after incorrect PIN provided
         int attempts = 1;
         while (attempts <= 3) {
             if (pin == this.currentAccount.getPin()) {
@@ -74,11 +74,11 @@ public class ATM {
         this.setCurrentScreen(4);
     }
 
-    public void screen4(){
+    public void screen4(){ //Invalid account information
         //screen is terminal until clear is added
     }
 
-    public int screen5(int choice){
+    public int screen5(int choice){ //Asks for transactions type
         if(choice == 1){
             this.setCurrentScreen(6);
             return 0;
@@ -107,36 +107,41 @@ public class ATM {
         return 0;
     }
 
-    public double screen6(){
+    public double screen6(){ //Shows current balance
         return currentAccount.getBalance();
     }
 
-    public void screen7(boolean deposit, double amount){
+    public void screen7(boolean deposit, double amount){ //Takes amount that is deposited or withdrawn
         if(deposit){
             this.setCurrentScreen(13);
             this.currentAccount.deposit(amount);
         }
         else{
             int valid = this.currentAccount.withdraw(amount);
-            if(amount > this.currency || amount % 10 != 0 || valid < 1){
+            if(amount > this.currency || amount % 10 != 0){
                 this.setCurrentScreen(9);
             }
             else{
-                this.currency -= amount;
-                this.setCurrentScreen(11);
+                if (valid < 1){
+                    this.setCurrentScreen(8);
+                }
+                else {
+                    this.currency -= amount;
+                    this.setCurrentScreen(11);
+                }
             }
         }
     }
 
-    public void screen8(){
+    public void screen8(){ //Account balance too low to withdraw
         //screen is terminal until clear is added
     }
 
-    public void screen9(){
+    public void screen9(){ //Machine cannot provide withdrawal
         //screen is terminal until clear is added
     }
 
-    public void screen10(boolean another){
+    public void screen10(boolean another){ //Withdrawal chute broken
         if(another){
             this.setCurrentScreen(5);
         }
@@ -145,11 +150,11 @@ public class ATM {
         }
     }
 
-    public void screen11(){
+    public void screen11(){ //Cash is dispensed
         this.setCurrentScreen(14);
     }
 
-    public void screen12(boolean another){
+    public void screen12(boolean another){ //deposit slot broken
         if(another){
             this.setCurrentScreen(5);
         }
@@ -158,11 +163,11 @@ public class ATM {
         }
     }
 
-    public void screen13(){
+    public void screen13(){ //Deposit accepted
         this.setCurrentScreen(14);
     }
 
-    public void screen14(boolean another){
+    public void screen14(boolean another){ //Transaction complete
         if(another){
             this.setCurrentScreen(5);
         }
@@ -171,7 +176,7 @@ public class ATM {
         }
     }
 
-    public void screen15(){
+    public void screen15(){ //Usage complete
         //screen is terminal until clear is added
     }
 
