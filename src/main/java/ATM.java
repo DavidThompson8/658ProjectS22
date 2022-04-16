@@ -7,21 +7,21 @@ public class ATM {
     private boolean chuteWorking;
     private boolean running;
     private int pinAttempts;
-    private final String[] screens= new String[]{"1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",};
+    private String[] screens= new String[]{"<html>Welcome!<br>Please enter your member ID.",
+            "Please enter your PIN.",
+            "<html>Incorrect PIN.<br>Please try again.",
+            "Invalid account details. You lose.",
+            "Please select transaction type.",
+            "Current Balance: ",
+            "<html>How much are you depositing / withdrawing?<br> Withdrawals must be in multiples of $10.",
+            "Insufficient funds.",
+            "<html>Machine can only dispense $10 notes.<br>Machine may have insufficient funds.",
+            "<html>Temporarily unable to process withdrawals.<br>Another transaction?",
+            "<html>Your balance is being updated.<br>Please take cash from dispenser.",
+            "<html>Temporarily unable to process deposits.<br>Another transaction?",
+            "Please insert funds into deposit slot.",
+            "<html>Receipt printing. <br>Another transaction?",
+            "<html>Please take your receipt.<br>Have a nice day.",};
 
     public ATM() {
         this.currentScreen = 1;
@@ -129,8 +129,8 @@ public class ATM {
         return 0;
     }
 
-    public double screen6(){ //Shows current balance
-        return currentAccount.getBalance();
+    public void screen6(){ //Shows current balance
+        this.screens[5] = "<html>Current Balance:<br>$" + this.currentAccount.getBalance();
     }
 
     public void screen7(boolean deposit, double amount){ //Takes amount that is deposited or withdrawn

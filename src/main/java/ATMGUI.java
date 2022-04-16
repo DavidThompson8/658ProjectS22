@@ -9,6 +9,8 @@ public class ATMGUI extends JFrame{
     private JButton enterButton;
     private JButton cancelButton;
     private JLabel screen;
+    private JButton yesButton;
+    private JButton noButton;
     private ATM atm;
 
     public ATMGUI(ATM atm){
