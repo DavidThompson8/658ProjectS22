@@ -1,17 +1,17 @@
 import java.util.Scanner;
 
 public class ATMController {
-    private ATMView view;
+    private ATMGUI view;
     private ATM atm;
 
-    public ATMController(ATMView view, ATM atm) {
+    public ATMController(ATMGUI view, ATM atm) {
         this.view = view;
         this.atm = atm;
     }
 
-    public void setUp(){
+    /*public void setUp(){
         this.view.initialScreen();
-    }
+    }*/
 
     public void runATM(){
         //FIX THIS TO WORK AS GRAPHICS INSTEAD OF TEXT
@@ -72,7 +72,7 @@ public class ATMController {
                 default: break;
             }
 
-            this.view.updateScreen(this.atm.getCurrentScreen());
+            this.view.changeScreen(this.atm.getScreen2());
         }
     }
 }

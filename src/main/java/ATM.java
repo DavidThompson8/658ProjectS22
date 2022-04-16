@@ -6,6 +6,9 @@ public class ATM {
     private boolean slotWorking;
     private boolean chuteWorking;
     private boolean running;
+    private int pinAttempts;
+    private final String screen1 = "<html>TESTING<br>123";
+    private final String screen2 = "<html>TESTING<br>456";
 
     public ATM() {
         this.currentScreen = 1;
@@ -15,6 +18,15 @@ public class ATM {
         this.slotWorking = true;
         this.chuteWorking = true;
         this.running = true;
+        this.pinAttempts = 0;
+    }
+
+    public String getScreen1() {
+        return screen1;
+    }
+
+    public String getScreen2() {
+        return screen2;
     }
 
     public int getCurrentScreen() {
@@ -59,16 +71,16 @@ public class ATM {
         else{
             this.setCurrentScreen(3);
         }
+        this.pinAttempts ++;
     }
 
     public void screen3(int pin){ //Asks for PIN after incorrect PIN provided
-        int attempts = 1;
-        while (attempts <= 3) {
+        while (this.pinAttempts <= 3) {
             if (pin == this.currentAccount.getPin()) {
                 this.setCurrentScreen(5);
                 break;
             } else {
-                attempts++;
+                this.pinAttempts++;
             }
         }
         this.setCurrentScreen(4);
