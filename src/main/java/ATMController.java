@@ -1,11 +1,11 @@
 import java.util.Scanner;
 
 public class ATMController {
-    private ATMGUI view;
+    private ATMGUI gui;
     private ATM atm;
 
-    public ATMController(ATMGUI view, ATM atm) {
-        this.view = view;
+    public ATMController(ATMGUI gui, ATM atm) {
+        this.gui = gui;
         this.atm = atm;
     }
 
@@ -72,7 +72,7 @@ public class ATMController {
                 default: break;
             }
 
-            this.view.changeScreen(this.atm.getScreen2());
+            this.gui.changeScreen();
         }
     }
 }

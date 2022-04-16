@@ -7,8 +7,21 @@ public class ATM {
     private boolean chuteWorking;
     private boolean running;
     private int pinAttempts;
-    private final String screen1 = "<html>TESTING<br>123";
-    private final String screen2 = "<html>TESTING<br>456";
+    private final String[] screens= new String[]{"1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",};
 
     public ATM() {
         this.currentScreen = 1;
@@ -21,12 +34,9 @@ public class ATM {
         this.pinAttempts = 0;
     }
 
-    public String getScreen1() {
-        return screen1;
-    }
 
-    public String getScreen2() {
-        return screen2;
+    public String getScreen(int screen) {
+        return screens[screen-1];
     }
 
     public int getCurrentScreen() {
