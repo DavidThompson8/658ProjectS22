@@ -2,15 +2,15 @@ import javax.swing.*;
 
 public class ATMGUI extends JFrame{
     private JPanel panel;
-    private JButton balanceButton;
-    private JButton withdrawButton;
-    private JButton depositButton;
-    private JTextField input;
-    private JButton enterButton;
-    private JButton cancelButton;
+    protected JButton balanceButton;
+    protected JButton withdrawButton;
+    protected JButton depositButton;
+    protected JTextField input;
+    protected JButton enterButton;
+    protected JButton cancelButton;
     private JLabel screen;
-    private JButton yesButton;
-    private JButton noButton;
+    protected JButton yesButton;
+    protected JButton noButton;
     private ATM atm;
 
     public ATMGUI(ATM atm){

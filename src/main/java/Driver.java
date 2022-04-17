@@ -1,5 +1,5 @@
 public class Driver {
-    public static void main(String[] args){
+    public static void main(String[] args) throws InterruptedException {
 
         ATM atm = new ATM();
         ATMGUI view = new ATMGUI(atm);

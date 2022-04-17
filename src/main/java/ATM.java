@@ -1,3 +1,5 @@
+import java.util.concurrent.TimeUnit;
+
 public class ATM {
     private int currentScreen;
     private final Account[] accounts;
@@ -66,8 +68,8 @@ public class ATM {
             }
         }
         if (valid){
-            this.setCurrentScreen(2);
             this.setCurrentAccount(accounts[location]);
+            this.setCurrentScreen(2);
         }
         else{
             this.setCurrentScreen(4);
@@ -76,19 +78,22 @@ public class ATM {
 
     public void screen2(int pin){ //Asks for PIN
         if(pin == this.currentAccount.getPin()){
+            this.pinAttempts = 0;
             this.setCurrentScreen(5);
         }
         else{
             this.setCurrentScreen(3);
+            this.pinAttempts ++;
         }
-        this.pinAttempts ++;
+
     }
 
     public void screen3(int pin){ //Asks for PIN after incorrect PIN provided
         while (this.pinAttempts <= 3) {
             if (pin == this.currentAccount.getPin()) {
+                this.pinAttempts = 0;
                 this.setCurrentScreen(5);
-                break;
+                return;
             } else {
                 this.pinAttempts++;
             }
@@ -172,8 +177,9 @@ public class ATM {
         }
     }
 
-    public void screen11(){ //Cash is dispensed
+    public void screen11() throws InterruptedException { //Cash is dispensed
         this.setCurrentScreen(14);
+        //TimeUnit.SECONDS.sleep(5);
     }
 
     public void screen12(boolean another){ //deposit slot broken
@@ -185,8 +191,9 @@ public class ATM {
         }
     }
 
-    public void screen13(){ //Deposit accepted
+    public void screen13() throws InterruptedException { //Deposit accepted
         this.setCurrentScreen(14);
+        //TimeUnit.SECONDS.sleep(5);
     }
 
     public void screen14(boolean another){ //Transaction complete
