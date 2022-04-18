@@ -7,10 +7,12 @@ import static org.junit.Assert.*;
 public class AccountTest {
 
     Account a1;
+    Account a2;
 
     @Before
     public void setUp() throws Exception {
         a1 = new Account(4, 4, 40);
+        a2 = new Account(5, 5, 2000000);
     }
 
 
@@ -51,6 +53,18 @@ public class AccountTest {
     public void withdraw2() {
         a1.withdraw(0.10);
         assertEquals(39.90, a1.getBalance(), .5);
+    }
+
+    @Test
+    public void withdraw3() {
+        a2.withdraw(1000000);
+        assertEquals(2000000, a2.getBalance(), .5);
+    }
+
+    @Test
+    public void withdraw4() {
+        a1.withdraw(50);
+        assertEquals(40, a1.getBalance(), .5);
     }
 
     @Test
