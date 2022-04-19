@@ -33,7 +33,7 @@ public class Account {
         if(take + this.dailyWithdrawn > dailyLimit) {
             return -1;
         }
-        else if(take > this.balance){
+        else if(take > this.balance || take % 10 != 0){
             return 0;
         }
         else{

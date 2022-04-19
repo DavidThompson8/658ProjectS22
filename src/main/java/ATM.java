@@ -9,7 +9,7 @@ public class ATM {
     private boolean chuteWorking;
     private boolean running;
     private int pinAttempts;
-    private String[] screens= new String[]{"<html>Welcome!<br>Please enter your member ID.",
+    protected String[] screens= new String[]{"<html>Welcome!<br>Please enter your member ID.",
             "Please enter your PIN.",
             "<html>Incorrect PIN.<br>Please try again.",
             "Invalid account details. You lose.",
@@ -57,6 +57,10 @@ public class ATM {
         this.currentAccount = currentAccount;
     }
 
+    public Account getCurrentAccount() {
+        return currentAccount;
+    }
+
     public void screen1(int pan){ //Starting screen, asks for PAN
         boolean valid = false;
         int location = -1;
@@ -89,21 +93,24 @@ public class ATM {
     }
 
     public void screen3(int pin){ //Asks for PIN after incorrect PIN provided
-        while (this.pinAttempts <= 3) {
+        if (this.pinAttempts < 3) {
             if (pin == this.currentAccount.getPin()) {
                 this.pinAttempts = 0;
                 this.setCurrentScreen(5);
-                return;
             } else {
                 this.pinAttempts++;
+                if (pinAttempts >= 3){
+                    this.setCurrentScreen(4);
+                }
             }
+            return;
         }
-        this.setCurrentScreen(4);
+        else{this.setCurrentScreen(4);}
     }
 
-    public void screen4(){ //Invalid account information
-        //screen is terminal until clear is added
-    }
+    /*public void screen4(){ //Invalid account information
+        //screen is terminal
+    }*/
 
     public int screen5(int choice){ //Asks for transactions type
         if(choice == 1){
@@ -145,7 +152,7 @@ public class ATM {
         }
         else{
             int valid = this.currentAccount.withdraw(amount);
-            if(amount > this.currency || amount % 10 != 0){
+            if(amount > this.currency){
                 this.setCurrentScreen(9);
             }
             else{
@@ -160,13 +167,13 @@ public class ATM {
         }
     }
 
-    public void screen8(){ //Account balance too low to withdraw
-        //screen is terminal until clear is added
-    }
+    /*public void screen8(){ //Account balance too low to withdraw
+        //screen is terminal
+    }*/
 
-    public void screen9(){ //Machine cannot provide withdrawal
-        //screen is terminal until clear is added
-    }
+    /*public void screen9(){ //Machine cannot provide withdrawal
+        //screen is terminal
+    }*/
 
     public void screen10(boolean another){ //Withdrawal chute broken
         if(another){
@@ -177,9 +184,9 @@ public class ATM {
         }
     }
 
-    public void screen11() throws InterruptedException { //Cash is dispensed
-        this.setCurrentScreen(14);
+    public void screen11(){ //Cash is dispensed
         //TimeUnit.SECONDS.sleep(5);
+        this.setCurrentScreen(14);
     }
 
     public void screen12(boolean another){ //deposit slot broken
@@ -191,9 +198,9 @@ public class ATM {
         }
     }
 
-    public void screen13() throws InterruptedException { //Deposit accepted
-        this.setCurrentScreen(14);
+    public void screen13() { //Deposit accepted
         //TimeUnit.SECONDS.sleep(5);
+        this.setCurrentScreen(14);
     }
 
     public void screen14(boolean another){ //Transaction complete
@@ -205,9 +212,9 @@ public class ATM {
         }
     }
 
-    public void screen15(){ //Usage complete
-        //screen is terminal until clear is added
-    }
+    /*public void screen15(){ //Usage complete
+        //screen is terminal
+    }*/
 
     public void changeSlotStatus(){ //break or repair the imaginary deposit slot
         this.slotWorking = !this.slotWorking;
@@ -221,4 +228,11 @@ public class ATM {
         this.running = false;
     }
 
+    public boolean isSlotWorking() {
+        return slotWorking;
+    }
+
+    public boolean isChuteWorking() {
+        return chuteWorking;
+    }
 }
