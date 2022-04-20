@@ -102,10 +102,7 @@ public class ATMController {
         this.depositing = false;
     }
 
-
-    public void runATM() throws InterruptedException {
-
-
+    public void addListeners(){
         gui.cancelButton.addActionListener(cancel);
         gui.enterButton.addActionListener(enter);
         gui.balanceButton.addActionListener(balance);
@@ -113,18 +110,31 @@ public class ATMController {
         gui.withdrawButton.addActionListener(withdraw);
         gui.yesButton.addActionListener(yes);
         gui.noButton.addActionListener(no);
+    }
+
+    public void checkScreen(){
+        switch(atm.getCurrentScreen()){
+            case 6: atm.screen6();
+                break;
+            case 11: atm.screen11();
+                break;
+            case 13: atm.screen13();
+                break;
+            default: break;
+        }
+    }
+
+
+    public void runATM() throws InterruptedException {
+
+
+        addListeners();
 
         while(this.atm.isRunning()){
-            switch(atm.getCurrentScreen()){
-                case 6: atm.screen6();
-                    break;
-                case 11: atm.screen11();
-                    break;
-                case 13: atm.screen13();
-                    break;
-                default: break;
-            }
+            checkScreen();
             this.gui.changeScreen();
         }
+
+        gui.dispose();
     }
 }

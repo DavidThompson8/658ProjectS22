@@ -29,7 +29,7 @@ public class ATM {
         this.currentScreen = 1;
         this.accounts = Account.generateAccounts();
         this.currentAccount = null;
-        this.currency = 1000;
+        this.currency = 10000;
         this.slotWorking = true;
         this.chuteWorking = true;
         this.running = true;

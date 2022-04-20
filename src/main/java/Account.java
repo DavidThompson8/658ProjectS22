@@ -4,7 +4,7 @@ public class Account {
     private int pin;
     private double balance;
     private double dailyWithdrawn;
-    private final double dailyLimit = 1000;
+    private final double dailyLimit = 500;
 
     public Account(int pan, int pin, double balance) {
         this.pan = pan;
