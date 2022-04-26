@@ -157,7 +157,7 @@ public class ATMControllerTest {
     }
 
     @Test
-    public void useCase8(){ //User makes a withdrawal
+    public void useCase8(){ //User makes a withdrawal and no other transactions
         controller.addListeners();
         gui.input.setText("2");
         gui.enterButton.doClick();
@@ -262,5 +262,33 @@ public class ATMControllerTest {
         assertEquals(15, atm.getCurrentScreen());
         assertEquals("<html>Please take your receipt.<br>Have a nice day.", gui.screen.getText());
         assertEquals(1000, atm.getCurrentAccount().getBalance(), .5);
+    }
+
+    @Test
+    public void useCase12(){ //User makes a withdrawal and wishes to make another transaction
+        controller.addListeners();
+        gui.input.setText("2");
+        gui.enterButton.doClick();
+        controller.checkScreen();
+        gui.changeScreen();
+        gui.input.setText("123");
+        gui.enterButton.doClick();
+        controller.checkScreen();
+        gui.changeScreen();
+        gui.withdrawButton.doClick();
+        controller.checkScreen();
+        gui.changeScreen();
+        gui.input.setText("100");
+        gui.enterButton.doClick();
+        controller.checkScreen();
+        gui.changeScreen();
+        controller.checkScreen();
+        gui.changeScreen();
+        gui.yesButton.doClick();
+        controller.checkScreen();
+        gui.changeScreen();
+        assertEquals(5, atm.getCurrentScreen());
+        assertEquals("Please select transaction type.", gui.screen.getText());
+        assertEquals(900, atm.getCurrentAccount().getBalance(), .5);
     }
 }
