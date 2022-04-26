@@ -1,14 +1,16 @@
 import java.util.concurrent.TimeUnit;
 
 public class ATM {
-    private int currentScreen;
-    private final Account[] accounts;
-    private Account currentAccount;
-    private int currency;
-    private boolean slotWorking;
-    private boolean chuteWorking;
-    private boolean running;
-    private int pinAttempts;
+    private int currentScreen; //screen the ATM is currently on
+    private final Account[] accounts; //accounts serviced by this ATM
+    private Account currentAccount; //account currently being serviced
+    private int currency; //money currently in ATM that can be dispensed
+    private boolean slotWorking; //status of deposit slot
+    private boolean chuteWorking; //status of withdrawal chute
+    private boolean running; //status of the ATM (on/off)
+    private int pinAttempts; //how many times users has attempted to enter PIN
+
+    //Outputs for each screen
     protected String[] screens= new String[]{"<html>Welcome!<br>Please enter your member ID.",
             "Please enter your PIN.",
             "<html>Incorrect PIN.<br>Please try again.",
@@ -25,6 +27,7 @@ public class ATM {
             "<html>Receipt printing. <br>Another transaction?",
             "<html>Please take your receipt.<br>Have a nice day.",};
 
+    //Constructor
     public ATM() {
         this.currentScreen = 1;
         this.accounts = Account.generateAccounts();
@@ -37,6 +40,7 @@ public class ATM {
     }
 
 
+    //getters / setters
     public String getScreen(int screen) {
         return screens[screen-1];
     }
@@ -71,21 +75,21 @@ public class ATM {
                 break;
             }
         }
-        if (valid){
+        if (valid){ //valid PAN goes to screen 2
             this.setCurrentAccount(accounts[location]);
             this.setCurrentScreen(2);
         }
-        else{
+        else{ //invalid PAN goes to screen 4
             this.setCurrentScreen(4);
         }
     }
 
     public void screen2(int pin){ //Asks for PIN
-        if(pin == this.currentAccount.getPin()){
-            this.pinAttempts = 0;
+        if(pin == this.currentAccount.getPin()){ //Valid PIN logs in, goes to screen 5
+            this.pinAttempts = 0; //reset number of attempts for next user
             this.setCurrentScreen(5);
         }
-        else{
+        else{ //invalid PIN goes to screen 3
             this.setCurrentScreen(3);
             this.pinAttempts ++;
         }
@@ -93,13 +97,13 @@ public class ATM {
     }
 
     public void screen3(int pin){ //Asks for PIN after incorrect PIN provided
-        if (this.pinAttempts < 3) {
+        if (this.pinAttempts < 3) { //Valid PIN logs in, goes to screen 5
             if (pin == this.currentAccount.getPin()) {
-                this.pinAttempts = 0;
+                this.pinAttempts = 0; //reset number of attempts for next user
                 this.setCurrentScreen(5);
-            } else {
+            } else { //invalid PIN reruns this screen until valid PIN is provided to all attemepts are used
                 this.pinAttempts++;
-                if (pinAttempts >= 3){
+                if (pinAttempts >= 3){ //If all attempts are used without valid entry, go to screen 4
                     this.setCurrentScreen(4);
                 }
             }
@@ -108,31 +112,28 @@ public class ATM {
         else{this.setCurrentScreen(4);}
     }
 
-    /*public void screen4(){ //Invalid account information
-        //screen is terminal
-    }*/
 
     public int screen5(int choice){ //Asks for transactions type
-        if(choice == 1){
+        if(choice == 1){ //choice 1 is balance request, go to screen 6
             this.setCurrentScreen(6);
             return 0;
         }
-        else if(choice == 2){
-            if(this.slotWorking){
+        else if(choice == 2){ //choice 2 is deposit
+            if(this.slotWorking){ //go to screen 7 if deposit slot is working
                 this.setCurrentScreen(7);
                 return 1;
             }
-            else{
+            else{ //go to scrren 12 if deposit slot is not working
                 this.setCurrentScreen(12);
                 return 0;
             }
         }
-        else if(choice == 3){
-            if(this.chuteWorking){
+        else if(choice == 3){ //choice 3 is withdrawal
+            if(this.chuteWorking){ //go to screen 7 if withdrawal chute is working
                 this.setCurrentScreen(7);
                 return 0;
             }
-            else{
+            else{ //go to screen 10 if withdrawal chute is not working
                 this.setCurrentScreen(10);
                 return 0;
             }
@@ -141,25 +142,26 @@ public class ATM {
         return 0;
     }
 
+    //screen 6 displays current user's account balance
     public void screen6(){ //Shows current balance
         this.screens[5] = "<html>Current Balance:<br>$" + this.currentAccount.getBalance();
     }
 
     public void screen7(boolean deposit, double amount){ //Takes amount that is deposited or withdrawn
-        if(deposit){
+        if(deposit){ //if deposit was chosen on screen 5, deposit the amount
             this.setCurrentScreen(13);
             this.currentAccount.deposit(amount);
         }
-        else{
+        else{ //if withdrawal was chosen on screen 5, attempt to withdraw the amount
             int valid = this.currentAccount.withdraw(amount);
-            if(amount > this.currency){
+            if(amount > this.currency){ //if ATM lacks requested funds, go to screen 9
                 this.setCurrentScreen(9);
             }
             else{
-                if (valid < 1){
+                if (valid < 1){ //if user is not allowed to withdraw requested funds, go to screen 8
                     this.setCurrentScreen(8);
                 }
-                else {
+                else { //if user can perform withdrawal, withdraw the funds
                     this.currency -= amount;
                     this.setCurrentScreen(11);
                 }
@@ -167,19 +169,11 @@ public class ATM {
         }
     }
 
-    /*public void screen8(){ //Account balance too low to withdraw
-        //screen is terminal
-    }*/
-
-    /*public void screen9(){ //Machine cannot provide withdrawal
-        //screen is terminal
-    }*/
-
     public void screen10(boolean another){ //Withdrawal chute broken
-        if(another){
+        if(another){ //go back to screen 5 if user wants to continue with transactions
             this.setCurrentScreen(5);
         }
-        else{
+        else{ //go to screen 15 if user is done
             this.setCurrentScreen(15);
         }
     }
@@ -190,10 +184,10 @@ public class ATM {
     }
 
     public void screen12(boolean another){ //deposit slot broken
-        if(another){
+        if(another){ //go back to screen 5 if user wants to continue with transactions
             this.setCurrentScreen(5);
         }
-        else{
+        else{ //go to screen 15 if user is done
             this.setCurrentScreen(15);
         }
     }
@@ -204,18 +198,16 @@ public class ATM {
     }
 
     public void screen14(boolean another){ //Transaction complete
-        if(another){
+        if(another){ //go back to screen 5 if user wants to continue with transactions
             this.setCurrentScreen(5);
         }
-        else{
+        else{ //go to screen 15 if user is done
             this.setCurrentScreen(15);
         }
     }
 
-    /*public void screen15(){ //Usage complete
-        //screen is terminal
-    }*/
 
+    //break or repair parts of the ATM, to be used when testing
     public void changeSlotStatus(){ //break or repair the imaginary deposit slot
         this.slotWorking = !this.slotWorking;
     }
@@ -224,6 +216,7 @@ public class ATM {
         this.chuteWorking = !this.chuteWorking;
     }
 
+    //more getters / setters
     public void stopRunning(){
         this.running = false;
     }

@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class ATMGUITest {
+public class ATMGUITest { //all tests are unit tests of components they are named after
 
     ATMGUI gui;
     ATM atm;

@@ -5,10 +5,14 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class ATMController {
+    //controller is aware of model and view
     private ATMGUI gui;
     private ATM atm;
-    //int in;
+    //tracks whether user is trying to deposit or withdraw, causes bug that results
+    //in test failures
     private boolean depositing;
+
+    //Actionlistners for GUI buttons
     ActionListener cancel = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -102,7 +106,7 @@ public class ATMController {
         this.depositing = false;
     }
 
-    public void addListeners(){
+    public void addListeners(){ //attach listeners to buttons
         gui.cancelButton.addActionListener(cancel);
         gui.enterButton.addActionListener(enter);
         gui.balanceButton.addActionListener(balance);
@@ -112,7 +116,7 @@ public class ATMController {
         gui.noButton.addActionListener(no);
     }
 
-    public void checkScreen(){
+    public void checkScreen(){ //some screens execute without button clicks, ensure they run when they need to
         switch(atm.getCurrentScreen()){
             case 6: atm.screen6();
                 break;
@@ -125,7 +129,7 @@ public class ATMController {
     }
 
 
-    public void runATM() throws InterruptedException {
+    public void runATM() throws InterruptedException { //run the ATM until it is closed
 
 
         addListeners();

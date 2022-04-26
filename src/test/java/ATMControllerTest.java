@@ -13,19 +13,19 @@ public class ATMControllerTest {
     ATMController controller;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws Exception { //set up atm for testing
         atm = new ATM();
         gui = new ATMGUI(atm);
         controller = new ATMController(gui, atm);
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() throws Exception { //make sure GUI closes when done testing
         gui.dispose();
     }
 
     @Test
-    public void useCase1() throws InterruptedException {
+    public void useCase1() throws InterruptedException { //User provides valid PAN
         controller.addListeners();
         gui.input.setText("1");
         gui.enterButton.doClick();
@@ -35,7 +35,7 @@ public class ATMControllerTest {
     }
 
     @Test
-    public void useCase2(){
+    public void useCase2(){ //User provides invalid PAN
         controller.addListeners();
         gui.input.setText("7");
         gui.enterButton.doClick();
@@ -45,7 +45,7 @@ public class ATMControllerTest {
     }
 
     @Test
-    public void useCase3(){
+    public void useCase3(){ //User provides correct PIN after multiple attempts
         controller.addListeners();
         gui.input.setText("1");
         gui.enterButton.doClick();
@@ -67,7 +67,7 @@ public class ATMControllerTest {
     }
 
     @Test
-    public void useCase4(){
+    public void useCase4(){ //User fails to provide correct PIN in allowed number of attempts
         controller.addListeners();
         gui.input.setText("1");
         gui.enterButton.doClick();
@@ -89,7 +89,7 @@ public class ATMControllerTest {
     }
 
     @Test
-    public void useCase5(){
+    public void useCase5(){ //User checks their account balance
         controller.addListeners();
         gui.input.setText("1");
         gui.enterButton.doClick();
@@ -107,7 +107,7 @@ public class ATMControllerTest {
     }
 
     @Test
-    public void useCase6(){
+    public void useCase6(){ //User makes a deposit and no other transactions
         controller.addListeners();
         gui.input.setText("1");
         gui.enterButton.doClick();
@@ -135,7 +135,7 @@ public class ATMControllerTest {
     }
 
     @Test
-    public void useCase7(){
+    public void useCase7(){ //User wants to make a deposit, but deposit slot is not working
         atm.changeSlotStatus();
         controller.addListeners();
         gui.input.setText("1");
@@ -157,7 +157,7 @@ public class ATMControllerTest {
     }
 
     @Test
-    public void useCase8(){
+    public void useCase8(){ //User makes a withdrawal
         controller.addListeners();
         gui.input.setText("2");
         gui.enterButton.doClick();
@@ -186,7 +186,7 @@ public class ATMControllerTest {
 
 
     @Test
-    public void useCase9(){
+    public void useCase9(){ //User attempts a withdrawal that is not a multiple of $10
         controller.addListeners();
         gui.input.setText("2");
         gui.enterButton.doClick();
@@ -214,7 +214,7 @@ public class ATMControllerTest {
     }
 
     @Test
-    public void useCase10(){
+    public void useCase10(){ //User attempts a withdrawal, but does not have enough funds in account
         controller.addListeners();
         gui.input.setText("1");
         gui.enterButton.doClick();
@@ -237,7 +237,7 @@ public class ATMControllerTest {
     }
 
     @Test
-    public void useCase11(){
+    public void useCase11(){ //User wants to make a withdrawal, but has exceeded the daily limit
         controller.addListeners();
         gui.input.setText("2");
         gui.enterButton.doClick();

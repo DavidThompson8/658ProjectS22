@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class ATMTest {
+public class ATMTest { //all tests are unit tests of method they are named after
 
     ATM atm;
     Account a1;

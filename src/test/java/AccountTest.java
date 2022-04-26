@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class AccountTest {
+public class AccountTest { //all tests are unit tests of methods they are named after
 
     Account a1;
     Account a2;
